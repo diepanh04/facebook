@@ -1,0 +1,85 @@
+<% @posts.each do |post| %>
+    <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">
+        <% @user = User.find_by_id(post.user_id)%>
+        <%= @user.name %><br>
+        <%= post.created_at %><br>
+        <%= post.content %><br>
+
+        <%= "#{post.likes.count} likes" %>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <% unless post.likes.nil?%>
+                <% like = post.likes.find {|like| like.user_id == current_user.id}%>
+                <%if like%>
+                    <%= button_to "Like", like_path(like), method: :delete, class: "btn btn-outline-primary"%>
+                <%else%>
+                    <%= button_to "Like", likes_path, class: "btn btn-outline-primary btn-sm",
+                        params: { like: {user_id: current_user.id, likable_id: post.id, likable_type: 'Post'}}%> 
+                <%end%>
+            <%end%>
+            <% if current_user.id == post.user_id%>
+                <%= button_to "Delete", post_path(post), method: :delete, 
+                    class: "btn btn-outline-danger btn-sm"%>
+            <% end %>
+        </div> 
+        <br>
+        
+        <%= form_with model: @comment do |form| %>
+            <%= form.text_area :body, value: params[:body],
+                placeholder: "Write something..", class:"form-control p-3 mb-2 bg-dark text-white bg-opacity-25" %>
+            <%= form.hidden_field :user_id, value: current_user.id %>
+            <%= form.hidden_field :commentable_id, value: post.id %>
+            <%= form.hidden_field :commentable_type, value: "Post" %>
+            <%= form.submit "Comment",  class:"btn btn-outline-light"%>
+        <%end%>
+
+        <div class="w-75 p-3">
+        <% unless post.comments.nil?%>
+            <% post.comments.each do |comment|%>
+                <div class="container p-3 mb-2 bg-dark text-white bg-opacity-25">
+                    <div class="fw-bold">
+                        <%= User.find_by_id(comment.user_id).name %>
+                    </div>
+                    <%= comment.body%>
+                </div>
+                
+                <%= "#{comment.likes.count} likes" %>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <% unless comment.likes.nil?%>
+                        <% like = comment.likes.find {|like| like.user_id == current_user.id}%>
+                            <%if like%>
+                                <%= button_to "Like", like_path(like), method: :delete, class: "btn btn-outline-primary btn-sm"%>
+                            <%else%>
+                                <%= button_to "Like", likes_path, class: "btn btn-outline-primary btn-sm",
+                                    params: { like: {user_id: current_user.id, likable_id: comment.id, likable_type: 'Comment'}}%> 
+                            <%end%>
+                    <%end%>
+                    <% if current_user.id == comment.user_id %>
+                        <%= button_to "Delete", comment_path(comment), method: :delete, 
+                            class: "btn btn-outline-danger btn-sm"%>
+                    <% end %>
+                </div>
+                
+                <%= form_with model: @comment do |form| %>
+                    <%= form.text_area :body,
+                        placeholder: "Write something..", class:"form-control p-3 mb-2 bg-dark text-white bg-opacity-25" %>
+                    <%= form.hidden_field :user_id, value: current_user.id %>
+                    <%= form.hidden_field :commentable_id, value: comment.id %>
+                    <%= form.hidden_field :commentable_type, value: "Comment" %>
+                    <%= form.submit "Comment", class:"btn btn-outline-light"%>
+                <%end%>
+
+                <% unless comment.comments.nil? %>
+                    <% comment.comments.each do |comment| %>
+                        <div class="container p-3 mb-2 bg-dark text-white bg-opacity-25">
+                            <div class="fw-bold">
+                                <%= User.find_by_id(comment.user_id).name %>
+                            </div>
+                            <%= comment.body%>
+                        </div>
+                    <% end %>
+                <% end %>
+            <%end%>
+        <%end%>
+        </div>
+    </div>
+<% end %>

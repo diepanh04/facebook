@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <% if user_signed_in? %>
+            <div class="col-7">
+                <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">
+                    <%= render "posts/new_post"%>
+                </div>
+                <%= render "posts/all_posts"%>
+            </div>
+        <%end%>
+    </div>
+</div>

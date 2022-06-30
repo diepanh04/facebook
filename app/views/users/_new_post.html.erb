@@ -1,0 +1,8 @@
+<%= form_with(model: @user, method: :get, controller: "users", action: "new") do |form| %>
+    <%= form.fields_for :post do |subform| %>
+        <%= subform.text_area :content, value: params[:content],
+         placeholder: "Write something...", class: "form-control"%>
+        <%= subform.hidden_field :user_id, value: current_user.id%>
+        <%= form.submit %>
+    <%end%>
+<%end%>

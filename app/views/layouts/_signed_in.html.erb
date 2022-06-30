@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <%= link_to "Facebook", root_path%>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%= form_with(url: "/users", class: "d-flex", method: :get) do |form| %>
+      <%= form.text_field :name, class: "form-control me-2",
+          placeholder: "Search" %>
+      <%= form.submit "Search", class: "btn btn-outline-success"%>
+    <%end%>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "All Users", users_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to current_user.name, user_path(current_user), class:"nav-link" %>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li class="dropdown-item">
+              <%= link_to "Sign Out", destroy_user_session_path,
+                  :method => :delete, class: "nav-link"%>
+            </li>
+            <li class="dropdown-item">
+              <%= link_to "Edit Profile", edit_profile_path(current_user),
+                  class: "nav-link"%>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Friend Requests
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <% if !current_user.friend_invitations.nil? %>
+              <% current_user.friend_invitations.each do |invitation| %>
+                <li><%= User.find(invitation.requester_id).name %></li>
+              <% end %>
+            <% else %>
+              <%= "None"%>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

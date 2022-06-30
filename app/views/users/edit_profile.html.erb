@@ -1,0 +1,44 @@
+<div class="container">
+    <%= form_with(model: @user, url: update_profile_path) do |f| %>
+        <div class="mb-3 row justify-content-md-center">
+            <%= f.label :avatar, class: "col-sm-2 col-form-label" %>
+            <div class="col-sm-5">
+                <%= f.file_field :avatar %>
+            </div>
+        </div>
+
+        <div class="mb-3 row justify-content-md-center">
+            <%= f.label :name, class: "col-sm-2 col-form-label" %><br />
+            <div class="col-sm-5">
+                <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control"%>
+            </div>
+        </div>
+
+        <div class="mb-3 row justify-content-md-center">
+            <%= f.label :birthday, class: "col-sm-2 col-form-label" %><br />
+            <div class="col-sm-5">
+                <%= f.date_field :birthday, autofocus: true, autocomplete: "birthday", class: "form-control"%>
+            </div>
+        </div>
+
+        <div class="mb-3 row justify-content-md-center">
+            <%= f.label :occupation, class: "col-sm-2 col-form-label" %><br />
+            <div class="col-sm-5">
+                <%= f.text_field :occupation, autofocus: true, autocomplete: "occupation", class: "form-control"%>
+            </div>
+        </div>
+
+        <div class="mb-3 row justify-content-md-center">
+            <%= f.label :location, class: "col-sm-2 col-form-label" %><br />
+            <div class="col-sm-5">
+                <%= f.text_field :location, autofocus: true, autocomplete: "location", class: "form-control"%>
+            </div>
+        </div>
+
+        <div class="mb-3 row justify-content-md-center">
+            <div class="col-sm-2">
+                <%= f.submit%>
+            </div>
+        </div>
+    <% end %>
+</div>

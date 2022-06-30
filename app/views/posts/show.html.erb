@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-7">
+            <div class="container p-3 mb-2 bg-secondary text-white border rounded">
+                <% @user = User.find_by_id(@post.user_id)%>
+                <%= @user.name %><br>
+                <%= @post.created_at %><br>
+                <%= @post.content %><br>
+
+                <% unless @post.likes.nil?%>
+                    <% like = @post.likes.find {|like| like.user_id == current_user.id}%>
+                    <%if like%>
+                        <%= button_to "Like", like_path(like), method: :delete%>
+                    <%else%>
+                        <%= button_to "Like", likes_path, 
+                            params: { like: {user_id: current_user.id, likable_id: @post.id, likable_type: 'Post'}}%> 
+                    <%end%>
+                <%end%>
+                <%= @post.likes.count %> 
+
+        <%= form_with model: @post do |form| %>
+            <% form.hidden_field :content, value: params[:content]%>
+            <% form.hidden_field :user_id, value: @user.id%>
+            <%= form.fields_for :comments do |subform| %>
+                <%= subform.text_area :body, 
+                    placeholder: "Write something..", class:"form-control" %>
+                <%= subform.hidden_field :user_id, value: current_user.id %>
+                <%= subform.hidden_field :commentable_id, value: @post.id %>
+                <%= subform.hidden_field :commentable_type, value: "Post" %>
+            <%end%>
+            <%= form.submit%>
+        <%end%>
+        </div>
+        </div>
+    </div>
+</div>

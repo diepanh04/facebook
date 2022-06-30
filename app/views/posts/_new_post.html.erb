@@ -1,0 +1,5 @@
+<%= form_with(model: @post, method: :post) do |form| %>
+    <%= form.text_area :content, value: params[:content],
+        placeholder: "Write something...", class: "form-control p-3 mb-2 bg-dark text-white bg-opacity-25" %>
+    <%= form.submit "Post", class:"btn btn-outline-light" %>
+<%end%>
