@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  #get 'users/edit_profile', to: "users#edit_profile"
   resources :posts 
   resources :likes 
   resources :comments 
