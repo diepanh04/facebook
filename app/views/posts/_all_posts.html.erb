@@ -1,6 +1,7 @@
 <% @posts.each do |post| %>
     <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">
         <% @user = User.find_by_id(post.user_id)%>
+        <%= image_tag @user.avatar.small.url if @user.avatar? %>
         <%= @user.name %><br>
         <%= post.created_at %><br>
         <%= post.content %><br>
@@ -37,6 +38,7 @@
             <% post.comments.each do |comment|%>
                 <div class="container p-3 mb-2 bg-dark text-white bg-opacity-25">
                     <div class="fw-bold">
+                        <%= image_tag @user.avatar.small.url if @user.avatar? %>
                         <%= User.find_by_id(comment.user_id).name %>
                     </div>
                     <%= comment.body%>
@@ -72,7 +74,9 @@
                     <% comment.comments.each do |comment| %>
                         <div class="container p-3 mb-2 bg-dark text-white bg-opacity-25">
                             <div class="fw-bold">
-                                <%= User.find_by_id(comment.user_id).name %>
+                                <% @user = User.find_by_id(comment.user_id)%>
+                                <%= image_tag @user.avatar.small.url if @user.avatar? %>
+                                <%= @user.name %>
                             </div>
                             <%= comment.body%>
                         </div>

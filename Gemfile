@@ -78,3 +78,9 @@ gem 'pry', '~> 0.14.1'
 gem 'carrierwave', '~> 2.0'
 
 gem 'mini_magick'
+
+gem 'inline_svg'
+
+gem 'omniauth-facebook'
+
+gem 'omniauth-rails_csrf_protection'

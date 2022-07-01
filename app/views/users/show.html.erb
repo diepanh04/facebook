@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <%= image_tag @user.avatar.thumb.url  if @user.avatar? %>
+            <%= image_tag @user.avatar.thumb.url if @user.avatar?%>
             <h1><%= @user.name %></h1>
             <% unless current_user == @user%>
                 <% if current_user.friends_a.include?(@user) || current_user.friends_b.include?(@user)%>
@@ -27,7 +27,14 @@
     </div>
     <div class="row">
         <div class="col-3">
-            --User information here--
+            <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">
+                <h4>Profile</h4>
+                <p class="fs-5">
+                    <%= @user.location if @user.location? %><br>
+                    <%= @user.occupation if @user.occupation? %><br>
+                    <%= @user.birthday if @user.birthday? %>
+                </p>
+            </div>
         </div>
         <div class="col-7">
             <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">

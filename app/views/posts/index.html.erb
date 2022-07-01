@@ -1,6 +1,13 @@
 <div class="container">
     <div class="row">
         <div class="col-3">
+            <% if user_signed_in?%>
+                <%= image_tag current_user.avatar.small.url if current_user.avatar?%>
+                <%= current_user.name %>
+                <div class="container rounded p-3 mb-2 bg-secondary text-white bg-opacity-25">
+                    <h5>Friend Request</h5>
+                </div>
+            <% end %>
         </div>
         <% if user_signed_in? %>
             <div class="col-7">
