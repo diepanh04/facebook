@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_01_025602) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_03_070533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,33 +19,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_025602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "body"
-    t.string "commentable_type"
-    t.bigint "commentable_id"
   end
 
   create_table "friend_requests", force: :cascade do |t|
-    t.bigint "requester_id", null: false
-    t.bigint "recipient_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recipient_id"], name: "index_friend_requests_on_recipient_id"
-    t.index ["requester_id"], name: "index_friend_requests_on_requester_id"
-  end
-
-  create_table "friendships", force: :cascade do |t|
-    t.integer "friend_a_id"
-    t.integer "friend_b_id"
+    t.integer "recipient_id"
+    t.integer "requester_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.string "likable_type"
-    t.bigint "likable_id"
-    t.index ["likable_type", "likable_id"], name: "index_likes_on_likable"
   end
 
   create_table "posts", force: :cascade do |t|
